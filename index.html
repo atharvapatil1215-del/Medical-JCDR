@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JCDR — Journal of Clinical and Diagnostic Research</title>
+<style>
+:root{
+ --site-primary:#0d5c83; --site-secondary:#2f8f9d; --site-background:#ffffff;
+ --site-on-primary:#ffffff; --site-on-secondary:#ffffff; --site-on-background:#24313a;
+ --site-font-body:Arial,Helvetica,sans-serif; --site-font-heading:Georgia,"Times New Roman",serif;
+ --site-heading-scale:1; --site-spacing-scale:1; --site-radius-scale:1;
+ --site-decoration-opacity:1;
+ --blue:#0d5c83; --light:#eef5f7; --line:#d8e1e5; --muted:#66757d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--site-on-background);font-family:var(--site-font-body);font-size:14px}
+#app{min-height:100vh;background:var(--site-background)}
+a{color:inherit;text-decoration:none}
+.topbar{background:#f4f4f4;border-bottom:1px solid #ddd;color:#555;font-size:12px}
+.topbar .inner{max-width:1180px;margin:auto;padding:7px 18px;display:flex;justify-content:flex-end}
+.header{max-width:1180px;margin:auto;padding:15px 18px 12px;display:flex;align-items:center;gap:25px}
+.brand{display:flex;align-items:center;gap:13px;flex:1}
+.logo{width:64px;height:64px;border-radius:50%;background:linear-gradient(145deg,#0d5c83,#65aeb8);display:grid;place-items:center;color:white;font-weight:bold;font-size:19px;box-shadow:inset 0 0 0 5px #fff,0 1px 4px #aaa}
+.brand h1{font-family:var(--site-font-heading);font-size:25px;margin:0;color:#173d52}
+.brand small{display:block;color:#60737c;margin-top:5px;font-size:12px}
+.metrics{display:flex;gap:8px;align-items:center}
+.metric{border:1px solid #d7e0e4;padding:8px 12px;background:#fafcfd;text-align:center}
+.metric b{display:block;color:#0d5c83;font-size:15px}.metric span{font-size:10px;color:#718087}
+.nav{background:var(--site-primary);color:white;border-top:1px solid #0a4d6d;border-bottom:3px solid #72b8c0}
+.nav .inner{max-width:1180px;margin:auto;display:flex;flex-wrap:wrap}
+.nav a{padding:12px 13px;font-size:12px;border-right:1px solid rgba(255,255,255,.15)}
+.nav a:hover{background:#084b6b}
+.container{max-width:1180px;margin:auto;padding:18px}
+.breadcrumb{font-size:11px;color:#7b878c;margin-bottom:12px}
+.hero{display:grid;grid-template-columns:1.7fr 1fr;gap:16px}
+.panel{border:1px solid var(--line);background:#fff}
+.panel-title{background:#edf5f7;color:#124f68;font-weight:bold;padding:10px 13px;border-bottom:1px solid var(--line);font-size:13px}
+.hero-main{padding:18px}
+.hero-main h2{font-family:var(--site-font-heading);color:#154e69;font-size:28px;margin:0 0 7px}
+.hero-main p{line-height:1.65;color:#59686e;margin:8px 0}
+.search{display:flex;margin-top:16px}.search input{flex:1;padding:11px;border:1px solid #bccbd1}.search button{background:#0d5c83;color:#fff;border:0;padding:0 20px;font-weight:bold}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:15px}
+.quick a{border:1px solid #dbe3e6;background:#f8fafb;padding:10px;color:#175b76;font-size:12px}
+.notice{margin-top:16px;border-left:4px solid #d58c29;background:#fff8e9;padding:12px 14px;line-height:1.55}
+.side-list{padding:6px 12px 12px}.side-list a{display:block;padding:10px 2px;border-bottom:1px dotted #cdd7da;color:#185c76;font-size:12px}.side-list a:last-child{border:0}
+.section{margin-top:18px}.section-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+.about-layout{display:grid;grid-template-columns:250px 1fr;gap:16px}.about-menu{border:1px solid var(--line);background:#f8fafb;height:max-content}.about-menu button{display:block;width:100%;padding:11px 13px;border:0;border-bottom:1px solid #dfe7ea;background:transparent;text-align:left;color:#185c76;font-size:12px;cursor:pointer}.about-menu button:last-child{border-bottom:0}.about-menu button:hover,.about-menu button.active{background:#0d5c83;color:#fff}.about-content{min-width:0}.about-page{display:none}.about-page.active{display:block}.about-page h3{font-family:var(--site-font-heading);color:#154e69;font-size:21px;margin:0 0 12px}.about-page h4{color:#185c76;font-size:15px;margin:18px 0 8px}.about-page p,.about-page li{line-height:1.7;color:#5e6b70;font-size:13px}.about-page ul{padding-left:22px}.about-page .notice{margin-top:15px}.about-meta{font-size:11px;color:#7a878d;border-top:1px solid #e1e7e9;margin-top:18px;padding-top:10px}.license-box{border:1px solid #dbe3e6;background:#fafcfc;padding:14px}.specialties{columns:3;column-gap:28px}.specialties li{break-inside:avoid}.about-link{color:#0d5c83;text-decoration:underline}
+.issue-card{padding:14px}.issue-meta{font-size:11px;color:#718087;margin-bottom:8px}.article{padding:11px 0;border-bottom:1px solid #e3e8ea}.article:last-child{border:0}.article h3{margin:0 0 4px;color:#155a75;font-size:14px;line-height:1.35}.article p{margin:0;color:#68767c;font-size:12px;line-height:1.45}.buttons{margin-top:7px}.btn{display:inline-block;padding:5px 8px;border:1px solid #c5d7dd;color:#125a76;font-size:10px;margin-right:4px;background:#f7fafb}
+.testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.quote{border:1px solid #dbe2e5;background:#fafcfc;padding:14px;min-height:145px}.quote p{font-family:Georgia,serif;font-size:12px;line-height:1.55;color:#5e6b70;margin:0 0 10px}.quote b{font-size:11px;color:#24566a}
+.footer{margin-top:25px;background:#154b63;color:#dcebef}.footer-inner{max-width:1180px;margin:auto;padding:22px 18px}.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:22px}.footer h3{font-family:Georgia,serif;font-size:15px;margin:0 0 9px;color:#fff}.footer p,.footer a{font-size:11px;line-height:1.7;color:#c8dce2}.copyright{border-top:1px solid rgba(255,255,255,.2);margin-top:18px;padding-top:10px;font-size:10px;color:#b7d0d8}
+@media(max-width:800px){.header{align-items:flex-start}.metrics{display:none}.hero,.section-grid,.about-layout{grid-template-columns:1fr}.testimonials{grid-template-columns:1fr}.nav a{padding:10px 8px}.brand h1{font-size:20px}.specialties{columns:2}}
+@media(max-width:520px){.header{padding:12px}.logo{width:50px;height:50px;font-size:15px}.brand small{font-size:10px}.container{padding:12px}.nav .inner{display:grid;grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="topbar"><div class="inner"><span>Users Online: <b>40,411</b></span></div></div>
+  <header class="header">
+    <div class="brand">
+      <div class="logo">JCDR</div>
+      <div><h1>Journal of Clinical and Diagnostic Research</h1><small>ISSN — 0973-709X &nbsp; | &nbsp; Multidisciplinary Biomedical &amp; Dental Journal</small></div>
+    </div>
+    <div class="metrics">
+      <div class="metric"><b>20</b><span>Volume</span></div>
+      <div class="metric"><b>10</b><span>Issue</span></div>
+    </div>
+  </header>
+
+  <nav class="nav"><div class="inner">
+    <a href="#home">Home</a><a href="#about">About Us</a><a href="#issues">Issues</a><a href="#editorial">Editorial</a><a href="#authors">Authors</a><a href="#reviewers">Reviewers</a><a href="#search">Search</a><a href="#subscription">Subscription</a><a href="#register">Register</a><a href="#login">Login</a><a href="#contact">Contact</a>
+  </div></nav>
+
+  <main class="container" id="home">
+    <div class="breadcrumb">Home / Journal of Clinical and Diagnostic Research</div>
+    <div class="hero">
+      <section class="panel hero-main">
+        <h2>Journal of Clinical and Diagnostic Research</h2>
+        <p>A peer-reviewed, multidisciplinary medical and dental journal providing an open-access platform for research, reviews, case reports and scientific communication.</p>
+        <div class="search" id="search"><input id="searchBox" placeholder="Search articles, authors, keywords..."><button onclick="doSearch()">SEARCH</button></div>
+        <div class="quick">
+          <a href="#issues">Current Issue</a><a href="#issues">Online Ahead of Print</a>
+          <a href="#issues">Archive</a><a href="#authors">Submit an Article</a>
+        </div>
+        <div class="notice"><b>Important Notice:</b> JCDR does not operate branch offices or appoint unauthorized agents. Please use only official contact information for correspondence.</div>
+      </section>
+      <aside class="panel">
+        <div class="panel-title">Journal Information</div>
+        <div class="side-list">
+          <a href="#about">Salient Features</a><a href="#about">Bibliographic Information</a><a href="#about">Abstracting and Indexing</a><a href="#about">Specialties Covered</a><a href="#about">Publisher</a><a href="#editorial">Editorial Board</a><a href="#about">Journal Policies</a><a href="#about">Legitimate / Non-Predatory</a><a href="#contact">Contact &amp; Support</a>
+        </div>
+      </aside>
+    </div>
+
+    <section class="section section-grid" id="issues">
+      <div class="panel">
+        <div class="panel-title">Highlights of Current Issue</div>
+        <div class="issue-card">
+          <div class="issue-meta">Year: 2026 &nbsp; • &nbsp; Month: October &nbsp; • &nbsp; Volume 20 &nbsp; • &nbsp; Issue 10</div>
+          <div class="article"><h3>Determinants and Outcomes of Primary Caesarean Section: A Retrospective Observational Study</h3><p>Clinical research article exploring determinants and outcomes in a retrospective cohort.</p><div class="buttons"><a class="btn" href="#">ABSTRACT</a><a class="btn" href="#">FULL TEXT</a></div></div>
+          <div class="article"><h3>Bilateral Large Spermatocele Masquerading as a Large Hydrocele: A Case Report</h3><p>A case report highlighting an uncommon diagnostic presentation.</p><div class="buttons"><a class="btn" href="#">ABSTRACT</a><a class="btn" href="#">FULL TEXT</a></div></div>
+          <div class="article"><h3>Retinol-binding Protein 4 and Diabetes Mellitus: A Review on Current Understanding and Clinical Importance</h3><p>A review of current evidence and clinical relevance.</p><div class="buttons"><a class="btn" href="#">ABSTRACT</a><a class="btn" href="#">FULL TEXT</a></div></div>
+        </div>
+      </div>
+      <aside class="panel">
+        <div class="panel-title">For Authors</div>
+        <div class="side-list">
+          <a href="#">Manuscript Instructions</a><a href="#">Manuscript Assistance</a><a href="#">Publication Charges</a><a href="#">Paid Services</a><a href="#">Early Online Publication Service</a><a href="#">Post Publication Review</a>
+        </div>
+        <div class="panel-title">For Reviewers</div>
+        <div class="side-list"><a href="#">Apply as Reviewer</a><a href="#">Instruction for Reviewer</a><a href="#">Reviewers Acknowledgment</a></div>
+      </aside>
+    </section>
+
+    <section class="section panel" id="about">
+      <div class="panel-title">About Us</div>
+      <div class="issue-card about-layout">
+        <div class="about-menu">
+          <button class="active" data-about="salient">Salient Features</button>
+          <button data-about="bibliographic">Bibliographic Information</button>
+          <button data-about="indexing">Abstracting And Indexing</button>
+          <button data-about="specialties">Specialties Covered</button>
+          <button data-about="publisher">Publisher</button>
+          <button data-about="testimonials">Testimonials</button>
+          <button data-about="license">License</button>
+          <button data-about="academics">Academics</button>
+          <button data-about="performance">JCDR Performance</button>
+          <button data-about="international">International Stats</button>
+          <button data-about="journalstats">Journal Stats</button>
+          <button data-about="policies">Journal Policies</button>
+          <button data-about="legitimate">Legitimate / Non-Predatory</button>
+          <button data-about="genesis">Genesis</button>
+          <button data-about="notice">Notice</button>
+        </div>
+
+        <div class="about-content">
+          <article class="about-page active" id="about-salient">
+            <h3>Salient Features of the Journal</h3>
+            <ul>
+              <li>Free access, peer reviewed, international biomedical journal.</li>
+              <li>Includes all medical and dental specialities.</li>
+              <li>Unique and extensive author support.</li>
+              <li>Regular publication every month — 12 issues per year. JCDR became monthly in August 2012.</li>
+              <li>Quick and easy communication between Editors and Authors.</li>
+              <li>Multidisciplinary journal with a wide scope.</li>
+              <li>JCDR Pre Publishing online submission and manuscript management system.</li>
+              <li>Pre-publication peer review and post-publication peer review through Reader Comments.</li>
+              <li>Easy download of bibliography.</li>
+              <li>Free full-text availability in HTML as well as PDF.</li>
+              <li>Email notifications on new issue release.</li>
+              <li>Statistics of article downloads and visits.</li>
+              <li>Certified by the Health on Net (HON), Geneva University Hospital.</li>
+              <li>Regularly crawled by major search engines including Google, Yahoo and MSN.</li>
+            </ul>
+          </article>
+
+          <article class="about-page" id="about-bibliographic">
+            <h3>Bibliographic Information</h3>
+            <ul><li><b>Online ISSN:</b> 0973-709X</li><li><b>Print ISSN:</b> 2249-782X</li><li><b>First Published:</b> 5 February 2007</li><li><b>Publication Frequency:</b> Monthly, 12 issues per year</li></ul>
+          </article>
+
+          <article class="about-page" id="about-indexing">
+            <h3>Abstracting, Archiving and Indexing</h3>
+            <p>The articles of JCDR are indexed/reviewed in the following databases and resources:</p>
+            <ul><li>Emerging Sources Citation Index (Web of Science)</li><li>Index Copernicus ICV 2019: 129.24</li><li>Academic Search Complete Database</li><li>Directory of Open Access Journals (DOAJ)</li><li>Embase</li><li>EBSCOhost</li><li>Google Scholar</li><li>HINARI Access to Research in Health Programme</li><li>Popline (reproductive health literature)</li><li>OmniMedicalSearch</li><li>PubMed Central (October 2012 to September 2017; the journal no longer participates in PMC)</li></ul>
+            <div class="notice"><b>Disclaimer:</b> Authors must be aware of the journal's present indexation. Indexing data may be transferred by active insertion or passive web crawling. Crawling schedules and procedures are controlled by the respective indexing authorities. JCDR does not take responsibility for crawler-related lapses or changes beyond its control.</div>
+            <p>JCDR does not warrant continued indexation. Agreements with indexing agencies may be terminated by either party. Authors should consider the current indexation status before submission; payments are not refundable because of a future change in indexation status.</p>
+          </article>
+
+          <article class="about-page" id="about-specialties">
+            <h3>Specialties Covered</h3>
+            <ul class="specialties"><li>Anaesthesia</li><li>Anatomy</li><li>Animal Research</li><li>Biochemistry</li><li>Biotechnology</li><li>Cardiology</li><li>Community</li><li>Dermatology</li><li>Dentistry</li><li>Education</li><li>Emergency Medicine</li><li>Endocrinology</li><li>Ethics</li><li>Ear Nose and Throat</li><li>Forensic</li><li>Gastroenterology</li><li>Genetics</li><li>Haematology</li><li>Health Management and Policy</li><li>Immunology and Infectious Diseases</li><li>Intensive Care</li><li>Internal Medicine</li><li>Microbiology</li><li>Nephrology / Renal</li><li>Neurology and Neuro-Surgery</li><li>Nutrition</li><li>Nursing/Midwifery</li><li>Oncology</li><li>Orthopaedics</li><li>Ophthalmology</li><li>Obstetrics and Gynaecology</li><li>Paediatrics and Neonatology</li><li>Pharmacology</li><li>Physiology</li><li>Pathology</li><li>Plastic Surgery</li><li>Psychiatry/Mental Health</li><li>Rehabilitation / Physiotherapy</li><li>Radiology</li><li>Statistics</li><li>Surgery</li><li>Speech and Hearing (Audiology)</li></ul>
+          </article>
+
+          <article class="about-page" id="about-publisher">
+            <h3>Publisher</h3>
+            <p>The journal is published by <b>Dr Hemant Jain</b> for <i>JCDR Research and Publications (P) Limited.</i></p>
+            <p><a class="about-link" href="https://www.jcdr.co.in/" target="_blank">JCDR Research and Publications (P) Limited</a> has the primary objective to stimulate and facilitate research publications.</p>
+            <h4>Editorial Office</h4><p>No: 3, 1/9 Roop Nagar, G.T. Road, Delhi-110007, India.<br>Helpline: 087-50-50-0303<br>Email: editors@jcdr.net</p>
+            <h4>Publication Office</h4><p>No: 3, 1/9 Roop Nagar, G.T. Road, Delhi-110007, India.<br>Helpline: 087-50-50-0303<br>Email: editors@jcdr.net</p>
+          </article>
+
+          <article class="about-page" id="about-testimonials"><h3>Testimonials</h3><div class="testimonials"><div class="quote"><p>“The publication process is professional and responsive, with helpful communication and attention to the final manuscript.”</p><b>Professor &amp; Head — Medical Institution</b></div><div class="quote"><p>“The journal provides a platform for researchers, including postgraduate students and early-career professionals, to publish their work.”</p><b>Professor — Department of Pediatrics</b></div><div class="quote"><p>“Free access to full articles and systematic online publication makes the journal useful for readers and authors.”</p><b>Professor &amp; Head — Dental Institution</b></div></div></article>
+
+          <article class="about-page" id="about-license">
+            <h3>Licenses</h3><div class="license-box"><p>Articles in the Journal of Clinical and Diagnostic Research are Open Access articles under a <b>Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License (CC BY-NC-ND)</b>.</p><p>This license permits use, distribution and reproduction in any medium, provided the original work is properly cited, is not changed in any way, and is not used for commercial purposes.</p><a class="about-link" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank">View Creative Commons License</a></div>
+          </article>
+
+          <article class="about-page" id="about-academics"><h3>Academics</h3><p>JCDR supports academics, clinicians, postgraduate students and young researchers by providing a platform for scientific communication, manuscript submission, peer review and publication.</p></article>
+          <article class="about-page" id="about-performance"><h3>JCDR Performance</h3><p>This section provides journal performance information, including article publication activity, downloads, visits and other journal-level indicators.</p></article>
+          <article class="about-page" id="about-international"><h3>International Stats</h3><p>JCDR welcomes original articles and case reports from researchers around the world and aims to provide an unbiased publication service to authors internationally.</p></article>
+          <article class="about-page" id="about-journalstats"><h3>Journal Stats</h3><p>Journal statistics include article downloads, website visits, publication activity and related readership indicators.</p></article>
+          <article class="about-page" id="about-policies"><h3>Journal Policies</h3><p>Authors, reviewers and readers should follow the journal's publication, peer-review, ethical, licensing and authorship policies when using the journal or submitting work.</p></article>
+          <article class="about-page" id="about-legitimate"><h3>Legitimate / Non-Predatory</h3><p>JCDR provides information about its publisher, editorial office, publication process, peer review, policies and official correspondence channels to help authors distinguish genuine journal communication from unauthorized intermediaries.</p></article>
+
+          <article class="about-page" id="about-genesis">
+            <h3>Genesis</h3>
+            <p>There is no dearth of journals published around the world. JCDR was conceived to be different, with a focus on helping physicians and researchers who have valuable clinical experience but may lack time, motivation or scientific writing skills to publish their findings.</p>
+            <p>The journal aims to publish findings of doctors working at the ground level and those of young researchers. It also aims to help authors draft and write articles, make constructive changes to submitted drafts and provide English editorial services for authors whose second language is English.</p>
+            <p>Although the journal was started in India, it welcomes original articles and case reports from around the world and aims to provide similar unbiased service to everyone who uses its services.</p>
+          </article>
+
+          <article class="about-page" id="about-notice">
+            <h3>Notice</h3>
+            <div class="notice"><b>Important Notice:</b> JCDR Research and Publications does not operate any branch offices, nor does it appoint agents or third-party service providers in India or abroad. Any individual or entity claiming to represent JCDR Research and Publications is unauthorized. Genuine correspondence should be made only through official contact details published on the website. Please exercise caution and avoid unauthorized intermediaries.</div>
+          </article>
+
+          <div class="about-meta">Last Updated: 12 May 2025 &nbsp; | &nbsp; First Published: 5 Feb 2007</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="editorial">
+      <div class="panel-title" style="border:1px solid var(--line)">Testimonials</div>
+      <div class="testimonials">
+        <div class="quote"><p>“The publication process is professional and responsive, with helpful communication and attention to the final manuscript.”</p><b>Professor &amp; Head — Medical Institution</b></div>
+        <div class="quote"><p>“The journal provides a platform for researchers, including postgraduate students and early-career professionals, to publish their work.”</p><b>Professor — Department of Pediatrics</b></div>
+        <div class="quote"><p>“Free access to full articles and systematic online publication makes the journal useful for readers and authors.”</p><b>Professor &amp; Head — Dental Institution</b></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact"><div class="footer-inner">
+    <div class="footer-grid">
+      <div><h3>Journal of Clinical and Diagnostic Research</h3><p>A multidisciplinary open-access journal serving medical and dental researchers, clinicians, students and readers.</p></div>
+      <div><h3>Quick Links</h3><a href="#issues">Current Issue</a><br><a href="#">Archive</a><br><a href="#">Search</a><br><a href="#">Register</a></div>
+      <div><h3>Resources</h3><a href="#">Authors</a><br><a href="#">Reviewers</a><br><a href="#">Journal Policies</a><br><a href="#">Advertisers</a></div>
+      <div><h3>Affiliated</h3><a href="#">JCDR Prepublishing</a><br><a href="#">Neonatal Database</a><br><a href="#">PSRF, India</a></div>
+    </div>
+    <div class="copyright">© 2007–2026 Journal of Clinical and Diagnostic Research, India. &nbsp; | &nbsp; Copyright &amp; Disclaimer &nbsp; | &nbsp; Sitemap</div>
+  </div></footer>
+</div>
+<script>
+function doSearch(){
+ const q=document.getElementById('searchBox').value.trim();
+ if(q) alert('Demo search: '+q);
+ else alert('Please enter a search term.');
+}
+
+document.querySelectorAll('.about-menu button').forEach(function(button){
+ button.addEventListener('click',function(){
+  const key=this.getAttribute('data-about');
+  document.querySelectorAll('.about-menu button').forEach(function(item){item.classList.remove('active')});
+  document.querySelectorAll('.about-page').forEach(function(page){page.classList.remove('active')});
+  this.classList.add('active');
+  const target=document.getElementById('about-'+key);
+  if(target){
+   target.classList.add('active');
+   document.getElementById('about').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+ });
+});
+
+document.querySelectorAll('.nav a[href="#about"]').forEach(function(link){
+ link.addEventListener('click',function(){
+  const first=document.querySelector('.about-menu button[data-about="salient"]');
+  if(first) first.click();
+ });
+});
+</script>
+
+<!--sites-preview-theme:start-->
+<style data-sites-preview-theme>:root{--site-primary:#2c6732 !important;--site-background:#e8f3fe !important;--site-on-background:#000000 !important;--site-font-body:system-ui,sans-serif !important;--site-font-heading:Georgia,serif !important}</style>
+<script type="application/json" data-sites-preview-theme>{"appearance":"custom","primary":"#2c6732","secondary":null,"background":"#e8f3fe","typography":"editorial","spacing":null,"roundness":null,"headingScale":null,"decorationOpacity":null}</script>
+<!--sites-preview-theme:end-->
+</body>
+</html>
